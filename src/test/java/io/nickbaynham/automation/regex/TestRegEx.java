@@ -1,6 +1,9 @@
 package io.nickbaynham.automation.regex;
 
 import org.testng.annotations.Test;
+
+import java.util.regex.Pattern;
+
 import static org.testng.Assert.*;
 import static io.nickbaynham.automation.regex.RegEx.*;
 
@@ -117,6 +120,35 @@ public class TestRegEx {
         assertEquals(getNumberOfMatches("aa", "a{3}"), 0);
         assertEquals(getNumberOfMatches("aaaa", "a{2,3}"), 1);
         assertEquals(getNumberOfMatches("aaaa", "a{2,3}?"), 2);
+    }
+
+    @Test
+    public void testCapturingGroups() {
+        assertEquals(getNumberOfMatches("12","(\\d\\d)"), 1);
+        assertEquals(getNumberOfMatches("1212", "(\\d\\d)"), 2);
+        assertEquals(getNumberOfMatches("1212","(\\d\\d)\\1"), 1);              // back referencing
+        assertEquals(getNumberOfMatches("1212", "(\\d\\d)(\\d\\d)"), 1);        // same result without back referencing
+        assertEquals(getNumberOfMatches("1213", "(\\d\\d)\\1"), 0);
+    }
+
+    @Test
+    public void testBoundaryMatchers() {
+        assertTrue(getNumberOfMatches("dogs are friendly", "^dog") > 0);        // begins with dog
+        assertFalse(getNumberOfMatches("is a dog man's best friend?", "dog$") > 0);
+        assertTrue(getNumberOfMatches("Man's best friend is a dog", "dog$") > 0);
+    }
+
+    @Test
+    public void testWordBoundary() {
+        assertTrue(getNumberOfMatches("a dog is friendly","\\bdog\\b") > 0);
+        assertTrue(getNumberOfMatches("dog is man's best friend","\\bdog\\b") > 0);
+        assertFalse(getNumberOfMatches("snoop dogg is a wrapper","\\bdog\\b") > 0);
+        assertTrue(getNumberOfMatches("snoop dogg is a wrapper","\\bdog\\B") > 0);
+    }
+
+    @Test
+    public void testCaseInsensitiveFlag() {
+        assertTrue(getNumberOfMatches("This is a Dog", "dog", Pattern.CASE_INSENSITIVE) > 0);
     }
 }
 

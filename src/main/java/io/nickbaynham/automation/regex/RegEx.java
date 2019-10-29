@@ -20,4 +20,14 @@ public class RegEx {
         }
         return matches;
     }
+
+    public static int getNumberOfMatches(String target, String regex, int flags) {
+        Pattern pattern = Pattern.compile(regex, flags);
+        Matcher matcher = pattern.matcher(target);
+        int matches = 0;
+        while (matcher.find()) {
+            matches++;
+        }
+        return matches;
+    }
 }

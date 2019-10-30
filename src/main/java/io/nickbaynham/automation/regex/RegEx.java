@@ -30,4 +30,17 @@ public class RegEx {
         }
         return matches;
     }
+
+    public static String replaceAll(String target, String regex, String replacement) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(target);
+        return matcher.replaceAll(replacement);
+    }
+
+    public static String replaceFirst(String target, String regex, String replacement) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(target);
+        return matcher.replaceFirst(replacement);
+    }
+
 }

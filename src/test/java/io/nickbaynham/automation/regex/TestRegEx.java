@@ -150,5 +150,23 @@ public class TestRegEx {
     public void testCaseInsensitiveFlag() {
         assertTrue(getNumberOfMatches("This is a Dog", "dog", Pattern.CASE_INSENSITIVE) > 0);
     }
+
+    // Replacements
+
+    @Test
+    public void testReplaceAll() {
+        assertEquals(
+                replaceAll("dogs are domestic animals, dogs are friendly", "dogs", "cats"),
+                "cats are domestic animals, cats are friendly"
+        );
+    }
+
+    @Test
+    public void testReplaceFirst() {
+        assertEquals(
+                replaceFirst("dogs are domestic animals, dogs are friendly", "dogs", "cats"),
+                "cats are domestic animals, dogs are friendly"
+        );
+    }
 }
 
